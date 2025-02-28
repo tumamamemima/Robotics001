@@ -13,13 +13,13 @@ import roboticstoolbox as rtb
 
 
 cobot = rtb.DHRobot([
-    rtb.RevoluteDH(d=0.457,  a=0.0,    alpha=-3.1416/2,   qlim=[-3.14, 3.14]),
-    rtb.RevoluteDH(offset=-3.1416/2, d=0, a=0.28,   alpha=0,    qlim=[-3.14, 3.14]),
-    rtb.RevoluteDH(d=0, a=0, alpha=-3.1415/2,     qlim=[-3.14, 3.14]),
-    rtb.RevoluteDH(offset=0, d=0.29, a=0.0,     alpha=3.1415/2,   qlim=[-3.14, 3.14]),
-    rtb.RevoluteDH(offset=0, d=0, a=0,    alpha=-3.1415/2,  qlim=[-3.14, 3.14]),
-    rtb.RevoluteDH(offset=0, d=0.07, a=0.0,    alpha=0,         qlim=[-3.14, 3.14])
-], name='FANUC Cr-4iA', base=SE3(0, 0, 0))
+    rtb.RevoluteDH(d=0.615,  a=0.1,    alpha=3.1416/2,   qlim=[-3.14, 3.14]),
+    rtb.RevoluteDH(offset=3.1416/2, d=0, a=0.705,   alpha=0,    qlim=[-3.14, 3.14]),
+    rtb.RevoluteDH(d=0, a=0.135, alpha=3.1415/2,     qlim=[-3.14, 3.14]),
+    rtb.RevoluteDH(offset=0, d=0.755, a=0.0,     alpha=-3.1415/2,   qlim=[-3.14, 3.14]),
+    rtb.RevoluteDH(offset=0, d=0, a=0,    alpha=3.1415/2,  qlim=[-3.14, 3.14]),
+    rtb.RevoluteDH(offset=0, d=0.085, a=0.0,    alpha=0,         qlim=[-3.14, 3.14])
+], name='Abb_IRB_2400', base=SE3(0, 0, 0))
 
 print(cobot)
 

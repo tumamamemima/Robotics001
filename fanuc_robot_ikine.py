@@ -19,7 +19,7 @@ cobot = rtb.DHRobot([
     rtb.RevoluteDH(offset=0, d=0.29, a=0.0,     alpha=3.1415/2,   qlim=[-3.14, 3.14]),
     rtb.RevoluteDH(offset=0, d=0, a=0,    alpha=-3.1415/2,  qlim=[-3.14, 3.14]),
     rtb.RevoluteDH(offset=0, d=0.07, a=0.0,    alpha=0,         qlim=[-3.14, 3.14])
-], name='FANUC Cr-4iA', base=SE3(0, 0, 0))
+], name='Cobot UR10', base=SE3(0, 0, 0))
 
 print(cobot)
 
@@ -66,3 +66,29 @@ cobot.plot(q=q, backend = 'pyplot',dt = 1 , limits=[-1, 1, -1, 1, 0, 2], shadow 
 
 q1 =np.array([0, 0, 0, 0, 0, 0])
 cobot.teach(q1)
+cobot.plot(q1, block=False)
+T1 = SE3.Trans(0.197,0.067,0.516)*SE3(rpy2tr(-170.536,70.515,124.13, unit='deg'))
+print(T1, "\n")
+# T2 = SE3.Trans(0.125,-0.105,1.013)*SE3(rpy2tr(-170.536,70.515,124.13, unit='deg'))
+# print(T2, "\n")
+
+trplot(T1.A, block=True)
+
+q_incial = np.array([0, 0, 0, 0, 0, 0])
+
+q = cobot.ikine_LM(T1, q_incial, ilimit=1000, slimit=100, tol=1e-6)
+print(f"Exito ={q.success}")
+
+ #ahora voy a mostrar la solucion
+ 
+if q.success:
+    print("Solucion encontrada")
+    print("q=", q.q)
+    T_resultado = cobot.fkine(q.q)
+    print(f"T_resultado = \n {T_resultado}")
+    cobot.plot(q.q, block=True) 
+ 
+
+
+
+
