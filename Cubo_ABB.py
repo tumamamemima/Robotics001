@@ -65,3 +65,39 @@ sol = cobot.ikine_LM(T_tool, q0=[0,np.deg2rad(90),0,0,0,0], ilimit=100, slimit=1
 print(sol)
 cobot.plot(q=sol.q, limits=[-0.3,1.5,-0.6,1.5,-0.1,1],
 backend='pyplot', shadow = True, jointaxes = True, eeframe = True, block = True)
+
+# Compute and plot individual inverse kinematics solutions for each via point
+ik_solutions = []  # List to hold the IK solutions
+we = [1, 1, 1, 0, 0, 0]  # Mask: only control the position
+
+for punto in via:
+    # Create the tool transformation for the current via point.
+    # Here we use a fixed translation (1.2 m along x), the via point translation,
+    # and a fixed orientation via SE3.OA.
+    T_tool_pt = SE3.Trans(1.2, 0, 0.0) * SE3.Trans(punto) * SE3.OA([0, -1, 0], [1, 0, 0])
+    
+    # Compute the inverse kinematics solution for the current point.
+    sol = cobot.ikine_LM(
+        T_tool_pt,
+        q0=[0, np.deg2rad(90), 0, 0, 0, 0],  # initial guess for the 6 joints
+        ilimit=100, slimit=100, tol=1e-6,
+        mask=we
+    )
+    
+    # Save the solution if needed
+    ik_solutions.append(sol.q)
+    
+    # Plot the current configuration (each plot is separate, no continuous trajectory)
+    cobot.plot(
+        q=sol.q,
+        limits=[-0.3, 1.5, -0.6, 1.5, -0.1, 1],
+        backend='pyplot',
+        shadow=True,
+        jointaxes=True,
+        eeframe=True,
+        block=False
+    )
+    plt.pause(0.5)  # Pause briefly to view each configuration
+
+# Keep the final plot window open
+plt.show()

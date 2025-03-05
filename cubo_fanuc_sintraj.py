@@ -51,7 +51,7 @@ for punto in T:
     via = np.vstack((via, xyz)) #append filas a puntos en via 
     
 xyz_traj = rtb.mstraj(via, qdmax =[0.5,0.5,0.5], dt=0.02 , tacc=0.2).q
-
+#plot_cube
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 plt.plot(xyz_traj[:,0], xyz_traj[:,1], xyz_traj[:,2])
@@ -59,13 +59,13 @@ ax.scatter(xyz_traj[0,0], xyz_traj[0,1], xyz_traj[0,2], c='r' , marker='*')
 ax.scatter(xyz_traj[-1,0], xyz_traj[-1,1], xyz_traj[-1,2], c='b' , marker='o')
 plt.show()
 
+#plot trajectory
 T_tool = SE3.Trans(0.25,0,0.0)*SE3.Trans(xyz_traj)*SE3.OA([0,-1,0],[1,0,0])
 we = [1,1,1,0,0,0]
 sol = cobot.ikine_LM(T_tool, q0=[0,np.deg2rad(90),0,0,0,0], ilimit=100, slimit=100, tol=1e-6 , mask = we)
 print(sol)
 cobot.plot(q=sol.q, limits=[-0.3,0.6,-0.6,0.6,-0.1,1],
 backend='pyplot', shadow = True, jointaxes = True, eeframe = True, block = True)
-
 
 #individual inverse kinematics solutions
 # Create a list to hold the IK solutions
@@ -97,3 +97,5 @@ for punto in via:
 
 # Keep the final plot window open
 plt.show()
+
+

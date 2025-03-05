@@ -70,3 +70,4 @@ cobot.plot(q=q, backend = 'pyplot',dt = 1 , limits=[-1, 1, -1, 1, 0, 2], shadow 
 
 q1 =np.array([0, 0, 0, 0, 0, 0, 0])
 cobot.teach(q1)
+
